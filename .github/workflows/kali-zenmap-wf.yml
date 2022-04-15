@@ -1,0 +1,50 @@
+name: "zenmap with kalilinux CI workflow"
+
+
+on:
+  push:
+    branches: [ main ]
+  # schedule:
+  #     - cron:  '0 0 1 * *' ##execution of a task in the first minute of the month  
+
+
+jobs:
+
+  zenmap-kalilinux-ubuntu-latest-job:
+    name: "build zenmap with ubuntu 16.04 on ubuntu latest"
+    runs-on: ubuntu-latest
+    env:
+      version: "latest"
+      name: "kali/zenmap"
+      dockerfiledir: "dockerfiles"
+      dockerfilename: "Dockerfile.kali.zenmap"
+    steps:
+    - uses: actions/checkout@v2
+    - name: "os fingerprinting"
+      run: |
+        hostnamectl status
+        lsb_release -a
+        lsb_release -d
+        cat /etc/lsb-release
+        cat /etc/issue
+        cat /etc/os-release
+        sudo apt-get install -y neofetch && neofetch                  
+    - name: "build zenmap with kalilinux"
+      run: |
+        # destroyed afterwards (use --rm )
+        # all subsequent Dockerfile commands generate new images and the cache is not usedi
+        set -xe
+        whoami
+        echo ${USER} 
+        #Add current logged in user to the docker group.
+        sudo usermod -aG docker ${USER}
+        id  ${USER}
+        docker build --no-cache --rm  -t ${name}:${version} . --file ${dockerfiledir}/${dockerfilename} 
+        docker image ls
+        docker image history ${name}:${version} 
+        docker system df -v               
+        docker image inspect ${name}:${version}  
+        echo "################## ENTRYPOINT ##################"
+        docker inspect -f '{{.Config.Entrypoint}}' ${name}:${version}
+        echo "################## ENTRYPOINT ##################"
+        docker run ${name}:${version} -h  
