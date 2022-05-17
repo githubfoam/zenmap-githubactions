@@ -7,6 +7,11 @@ RUN set -xe && \
     apt-get -qq update && \
     apt-get -qqy upgrade
 
+#ghost eye + etherape
+#displays network activity in the link layer, IP, and TCP modes
 RUN set -xe && \
-    apt-get install zenmap nmap etherape -y
-
+    apt-get install python3 nmap etherape -y && \ 
+    git clone https://github.com/BullsEye0/ghost_eye.git && \
+    cd ghost_eye  && \
+    pip3 install -r requirements.txt   && \
+    python3 ghost_eye.py
