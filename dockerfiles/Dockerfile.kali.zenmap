@@ -13,5 +13,6 @@ RUN set -xe && \
     apt-get install git python3 python3-pip nmap etherape -y && \ 
     git clone https://github.com/BullsEye0/ghost_eye.git && \
     cd ghost_eye  && \
-    pip3 install -r requirements.txt   && \
-    python3 ghost_eye.py
+    pip3 install -r requirements.txt
+    # FileNotFoundError: [Errno 2] No such file or directory: '/root/.local/share/webtech'
+    # python3 ghost_eye.py
