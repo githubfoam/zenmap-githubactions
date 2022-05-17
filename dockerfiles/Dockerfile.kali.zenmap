@@ -14,6 +14,6 @@ RUN set -xe && \
     git clone https://github.com/BullsEye0/ghost_eye.git && \
     cd ghost_eye  && \
     pip install webtech && \
-    pip3 install -r requirements.txt && \
+    pip3 install -r requirements.txt
     # FileNotFoundError: [Errno 2] No such file or directory: '/root/.local/share/webtech'
-    python3 ghost_eye.py
+    # python3 ghost_eye.py
