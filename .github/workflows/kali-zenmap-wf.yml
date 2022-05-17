@@ -47,4 +47,4 @@ jobs:
         echo "################## ENTRYPOINT ##################"
         docker inspect -f '{{.Config.Entrypoint}}' ${name}:${version}
         echo "################## ENTRYPOINT ##################"
-        docker run ${name}:${version} -h  
+        # docker run ${name}:${version} -h  
